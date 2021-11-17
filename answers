@@ -1,0 +1,2372 @@
+
+Ex: 1 A
+
+Sending SMS with toast notification from android application
+Date:
+
+
+AIM: To Develop a mobile application for Sending SMS with toast notification.
+
+PROCEDURE:
+
+1
+Use Android Studio IDE to create an Android application and name it.
+2
+Modify src/MainActivity.java file and add required code to take care of sending sms.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required. I'm adding a simple GUI to take mobile number and SMS text to be sent and a simple button to send SMS.
+4
+No need to define default string constants at res/values/strings.xml. Android studio takes care of default constants.
+5
+Modify AndroidManifest.xml as shown in the code.
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+AndroidManifest.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+<TextView
+android:id="@+id/fstTxt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="100dp" android:layout_marginTop="150dp" android:text="Mobile No" />
+<EditText
+android:id="@+id/mblTxt" android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:layout_marginLeft="100dp" android:ems="10"/>
+<TextView
+android:id="@+id/secTxt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Message" android:layout_marginLeft="100dp" />
+<EditText
+android:id="@+id/msgTxt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="100dp" android:ems="10" />
+<Button
+android:id="@+id/btnSend" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="100dp" android:text="Send SMS" />
+</LinearLayout>
+
+MainActivity.java
+
+import android.content.Intent; import android.net.Uri;
+import android.provider.Telephony;
+import android.support.v7.app.AppCompatActivity; import android.os.Bundle;
+import android.telephony.SmsManager; import android.view.View;
+import android.widget.Button; import android.widget.EditText; import android.widget.Toast;
+public class MainActivity extends AppCompatActivity { private EditText txtMobile;
+private EditText txtMessage; private Button btnSms;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);    txtMobile = (EditText)findViewById(R.id.mblTxt); txtMessage = (EditText)findViewById(R.id.msgTxt); btnSms = (Button)findViewById(R.id.btnSend);
+btnSms.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+try{
+SmsManager smgr = SmsManager.getDefault();
+
+smgr.sendTextMessage(txtMobile.getText().toString(),null,txtMessage
+.getText().toString(),null,null);
+Toast.makeText(MainActivity.this,	"SMS	Sent Successfully", Toast.LENGTH_SHORT).show();
+}
+catch (Exception e){
+Toast.makeText(MainActivity.this,	"SMS	Failed to Send, Please try again", Toast.LENGTH_SHORT).show();
+}
+}
+});
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+Thus application for sending SMS with toast notification was successfully completed.
+
+Ex: 1 B
+
+Sending an email from android device
+Date:
+
+
+AIM:
+
+To develop a mobile application for sending an email from android application
+
+PROCEDURE:
+
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code to take care of sending email.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required. I'm adding a simple button to launch Email Client.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+activity_main.xml
+
+
+
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sending Mail Example" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" android:textSize="30dp" />
+
+<TextView
+android:id="@+id/textView2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tutorials point " android:textColor="#ff87ff09" android:textSize="30dp" android:layout_above="@+id/imageButton" android:layout_alignRight="@+id/imageButton" android:layout_alignEnd="@+id/imageButton" />
+
+<ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/imageButton" android:src="@drawable/abc" android:layout_centerVertical="true" android:layout_centerHorizontal="true" />
+
+<Button
+android:id="@+id/sendEmail" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/compose_email"/>
+
+</LinearLayout>
+
+MainActivity.java
+
+
+
+Button startBtn = (Button) findViewById(R.id.sendEmail); startBtn.setOnClickListener(new View.OnClickListener() {
+public void onClick(View view) { sendEmail();
+}
+});
+}
+
+protected void sendEmail() { Log.i("Send email", "");
+String[] TO = {""};
+String[] CC = {""};
+Intent emailIntent = new Intent(Intent.ACTION_SEND);
+
+emailIntent.setData(Uri.parse("mailto:")); emailIntent.setType("text/plain"); emailIntent.putExtra(Intent.EXTRA_EMAIL, TO); emailIntent.putExtra(Intent.EXTRA_CC, CC); emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject"); emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes
+here");
+
+try {
+startActivity(Intent.createChooser(emailIntent, "Send mail..."));
+finish();
+Log.i("Finished sending email...", "");
+} catch (android.content.ActivityNotFoundException ex) {
+Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+}
+}
+}
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus we successfully developed mobile application for sending an email.
+
+Ex: 2
+Implement an application that implements Multi-threading
+Date:
+
+
+
+AIM:
+
+To implement an application that implements Multi-threading
+
+PROCEDURE:
+
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code to take care of multithread.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+
+Activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:orientation="vertical" >
+
+<ImageView android:id="@+id/imageView" android:layout_width="250dp" android:layout_height="250dp" android:layout_margin="50dp" android:layout_gravity="center" />
+<Button
+android:id="@+id/button" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp" android:layout_gravity="center" android:text="Load Image 1" />
+
+<Button
+android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dp" android:layout_gravity="center" android:text="Load image 2" />
+
+</LinearLayout>
+
+
+MainActivity.java
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity; import android.view.View;
+import android.widget.Button; import android.widget.ImageView;
+public class MainActivity extends AppCompatActivity
+{
+ImageView img; Button bt1,bt2;
+@Override
+protected void onCreate(Bundle savedInstanceState)
+{
+super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+bt1 = (Button)findViewById(R.id.button); bt2= (Button) findViewById(R.id.button2);
+img = (ImageView)findViewById(R.id.imageView);
+
+bt1.setOnClickListener(new    View.OnClickListener()
+{
+@Override
+public void onClick(View v)
+{
+new Thread(new Runnable()
+{
+@Override public void run()
+{
+img.post(new Runnable()
+{
+@Override public void run()
+{
+
+}
+});
+}
+img.setImageResource(R.drawable.india1);
+
+}
+});
+}).start();
+
+bt2.setOnClickListener(new    View.OnClickListener()
+{
+@Override
+public void onClick(View v)
+{
+new Thread(new Runnable()
+{
+@Override public void run()
+{
+img.post(new Runnable()
+{
+@Override public void run()
+{
+
+}
+});
+}
+img.setImageResource(R.drawable.india2);
+
+}
+});
+}
+}
+}).start();
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus Android Application that implements Multi-threading is developed and executed successfully.
+
+Ex: 3
+Using audio and video functions in android application.
+Date:
+
+
+AIM:
+
+To develop a android application for audio and video functions in an application.
+
+
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code to take care of audio and video functions.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+
+
+
+activity_main.xml
+
+<RelativeLayout      xmlns:androclass="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent" android:paddingBottom="@dimen/activity_vertical_margin" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" tools:context=".MainActivity" >
+<TextView android:id="@+id/textView1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true"
+android:layout_marginTop="30dp" android:text="Audio Controller" />
+<Button
+android:id="@+id/button1" style="?android:attr/buttonStyleSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignLeft="@+id/textView1" android:layout_below="@+id/textView1" android:layout_marginTop="48dp" android:text="start" />
+<Button
+android:id="@+id/button2" style="?android:attr/buttonStyleSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignTop="@+id/button1" android:layout_toRightOf="@+id/button1" android:text="pause" />
+<Button
+android:id="@+id/button3" style="?android:attr/buttonStyleSmall" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignTop="@+id/button2" android:layout_toRightOf="@+id/button2" android:text="stop" />
+</RelativeLayout>
+
+MainActivity.java
+
+import android.media.MediaPlayer; import android.os.Bundle;
+import android.os.Environment; import android.app.Activity; import android.view.Menu; import android.view.View;
+import   android.view.View.OnClickListener; import android.widget.Button;
+
+public class MainActivity extends Activity { Button start,pause,stop;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+start=(Button)findViewById(R.id.button1); pause=(Button)findViewById(R.id.button2); stop=(Button)findViewById(R.id.button3);
+//creating media player
+final MediaPlayer mp=new MediaPlayer(); try{
+//you can change the path, here path is external directory(e.g. sdcard) /Music/maine.mp3 mp.setDataSource(Environment.getExternalStorageDirectory().getPath()+"/Music/maine.mp3");
+
+mp.prepare();
+}catch(Exception e){e.printStackTrace();} start.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) { mp.start();
+}
+});
+pause.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) { mp.pause();
+}
+});
+stop.setOnClickListener(new OnClickListener() {
+@Override
+public void onClick(View v) { mp.stop();
+}
+});
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus  the  Android  Application  that  implements  Multi-threading  was  developed  and executed successfully.
+
+Ex: 4
+
+Develop an application that makes use of RSS Feed
+Date:
+
+
+
+AIM:
+
+To develop a Android Application that makes use of RSS Feed.
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code to take care of makes use of RSS Feed.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+
+Activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout      xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
+android:layout_height="fill_parent" android:orientation="vertical" >
+
+<ListView android:id="@+id/listView"
+android:layout_width="match_parent" android:layout_height="wrap_content" />
+
+</LinearLayout>
+MainActivity.java:
+
+import android.app.ListActivity; import android.content.Intent; import android.net.Uri;
+import android.os.AsyncTask; import android.os.Bundle; import android.view.View;
+import android.widget.ArrayAdapter; import android.widget.ListView; import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException; import org.xmlpull.v1.XmlPullParserFactory; import java.io.IOException;
+import java.io.InputStream;
+import   java.net.MalformedURLException; import java.net.URL;
+import java.util.ArrayList; import java.util.List;
+
+public class MainActivity extends ListActivity
+{
+List headlines; List links;
+
+@Override
+protected void onCreate(Bundle savedInstanceState)
+{
+super.onCreate(savedInstanceState); new MyAsyncTask().execute();
+}
+
+class MyAsyncTask extends AsyncTask<Object,Void,ArrayAdapter>
+{
+@Override
+protected ArrayAdapter doInBackground(Object[] params)
+{
+headlines = new ArrayList(); links = new ArrayList();
+try
+{
+URL url = new URL("https://codingconnect.net/feed"); XmlPullParserFactory factory = XmlPullParserFactory.newInstance(); factory.setNamespaceAware(false);
+XmlPullParser xpp = factory.newPullParser();
+// We will get the XML from an input stream xpp.setInput(getInputStream(url), "UTF_8"); boolean insideItem = false;
+
+// Returns the type of current event: START_TAG, END_TAG, etc.. int eventType = xpp.getEventType();
+while (eventType != XmlPullParser.END_DOCUMENT)
+{
+if (eventType == XmlPullParser.START_TAG)
+{
+if (xpp.getName().equalsIgnoreCase("item"))
+{
+insideItem = true;
+}
+else if (xpp.getName().equalsIgnoreCase("title"))
+{
+if (insideItem)
+headlines.add(xpp.nextText()); //extract the headline
+}
+else if (xpp.getName().equalsIgnoreCase("link"))
+{
+if (insideItem)
+links.add(xpp.nextText()); //extract the link of article
+}
+}
+else if(eventType==XmlPullParser.END_TAG && xpp.getName().equalsIgnoreCase("item"))
+{
+insideItem=false;
+}
+eventType = xpp.next(); //move to next element
+}
+
+}
+catch (MalformedURLException e)
+{
+e.printStackTrace();
+}
+catch (XmlPullParserException e)
+{
+e.printStackTrace();
+}
+catch (IOException e)
+{
+e.printStackTrace();
+}
+return null;
+}
+protected void onPostExecute(ArrayAdapter adapter)
+{
+adapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1,    headlines);
+setListAdapter(adapter);
+}
+}
+
+@Override
+protected void onListItemClick(ListView l, View v, int position, long id)
+{
+Uri uri = Uri.parse((links.get(position)).toString()); Intent intent = new Intent(Intent.ACTION_VIEW, uri); startActivity(intent);
+}
+
+public InputStream getInputStream(URL url)
+{
+try
+{
+return url.openConnection().getInputStream();
+}
+catch (IOException e)
+{
+return null;
+}
+}
+}
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus Android Application that makes use of RSS Feed is developed and executed sucessfully.
+
+
+Ex: 5
+
+Application development using web service in android
+Date:
+
+
+AIM:
+
+To develop an Application development using web service in android
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+
+
+activity_main.xml:
+
+<RelativeLayout      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent" android:paddingBottom="@dimen/activity_vertical_margin" android:paddingLeft="@dimen/activity_horizontal_margin" android:paddingRight="@dimen/activity_horizontal_margin" android:paddingTop="@dimen/activity_vertical_margin" tools:context=".MainActivity" >
+
+<EditText android:id="@+id/editText1"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true"
+android:layout_centerHorizontal="true" android:hint="Username" android:ems="10" >
+
+<requestFocus />
+</EditText>
+
+<EditText android:id="@+id/editText2"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignLeft="@+id/editText1" android:layout_below="@+id/editText1" android:layout_marginTop="67dp" android:ems="10"
+android:hint="Password" android:inputType="textPassword" />
+
+<Button
+android:id="@+id/button2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_marginBottom="24dp" android:layout_toRightOf="@+id/button1" android:text="New User" />
+
+<ProgressBar  android:id="@+id/progressBar1" style="?android:attr/progressBarStyleLarge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignLeft="@+id/button1" android:layout_below="@+id/editText2" android:layout_marginTop="22dp" />
+
+<Button
+android:id="@+id/button1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignLeft="@+id/editText2" android:layout_below="@+id/progressBar1" android:layout_marginLeft="22dp" android:text="Login" />
+
+</RelativeLayout>
+
+MainActivity.java
+import java.io.BufferedReader;
+import java.io.InputStream;  import java.io.InputStreamReader; import java.util.ArrayList;
+import java.util.List;
+import org.apache.http.HttpEntity; import org.apache.http.HttpResponse; import org.apache.http.NameValuePair; import org.apache.http.client.HttpClient;
+import     org.apache.http.client.entity.UrlEncodedFormEntity; import    org.apache.http.client.methods.HttpPost;
+import    org.apache.http.impl.client.DefaultHttpClient; import    org.apache.http.message.BasicNameValuePair; import android.os.AsyncTask;
+import android.os.Bundle; import android.app.Activity; import android.content.Intent; import android.view.View;
+import android.view.View.OnClickListener; import android.widget.Button;
+import android.widget.EditText; import android.widget.ProgressBar; import android.widget.Toast;
+
+public class MainActivity extends Activity { EditText password,userName;
+Button login,resister; ProgressBar progressBar;
+
+
+
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); password=(EditText) findViewById(R.id.editText2); userName=(EditText)    findViewById(R.id.editText1); login=(Button) findViewById(R.id.button1); resister=(Button) findViewById(R.id.button2);
+
+//progess_msz.setVisibility(View.GONE); progressBar=(ProgressBar) findViewById(R.id.progressBar1); progressBar.setVisibility(View.GONE);
+
+
+resister.setOnClickListener(new OnClickListener() {
+
+@Override
+public void onClick(View arg0) {
+// TODO Auto-generated method stub
+Intent intent=new Intent(MainActivity.this,ResisterUser.class);
+
+}
+});
+startActivity(intent);
+login.setOnClickListener(new OnClickListener() {
+
+public void onClick(View v) { progressBar.setVisibility(View.VISIBLE);
+
+String s1=userName.getText().toString(); String s2=password.getText().toString(); new ExecuteTask().execute(s1,s2);
+
+}
+});
+
+
+}
+
+class ExecuteTask extends AsyncTask<String, Integer, String>
+{
+
+@Override
+protected String doInBackground(String... params) { String res=PostData(params);
+return res;
+}
+
+@Override
+protected void onPostExecute(String result) { progressBar.setVisibility(View.GONE);
+//progess_msz.setVisibility(View.GONE); Toast.makeText(getApplicationContext(), result, 3000).show();
+}
+
+}
+
+public String PostData(String[] valuse) { String s="";
+try
+{
+HttpClient httpClient=new DefaultHttpClient();
+HttpPost httpPost=new HttpPost("http://10.0.0.8:7777/HttpPostServlet/servlet/Login");
+
+List<NameValuePair> list=new ArrayList<NameValuePair>(); list.add(new BasicNameValuePair("name", valuse[0])); list.add(new BasicNameValuePair("pass",valuse[1])); httpPost.setEntity(new UrlEncodedFormEntity(list));
+HttpResponse httpResponse= httpClient.execute(httpPost);
+
+HttpEntity httpEntity=httpResponse.getEntity(); s= readResponse(httpResponse);
+
+}
+catch(Exception exception) {} return s;
+
+
+}
+public String readResponse(HttpResponse res) { InputStream is=null;
+String return_text=""; try {
+is=res.getEntity().getContent();
+BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(is)); String line="";
+StringBuffer sb=new StringBuffer();
+while ((line=bufferedReader.readLine())!=null)
+{
+sb.append(line);
+}
+return_text=sb.toString();
+} catch (Exception e)
+{
+
+}
+return return_text;
+
+}
+
+}
+
+
+RegisterUser.java
+
+import java.util.ArrayList; import java.util.List;
+import org.apache.http.NameValuePair; import org.apache.http.client.HttpClient;
+import     org.apache.http.client.entity.UrlEncodedFormEntity; import    org.apache.http.client.methods.HttpPost;
+import    org.apache.http.impl.client.DefaultHttpClient; import    org.apache.http.message.BasicNameValuePair; import android.os.AsyncTask;
+import android.os.Bundle; import android.app.Activity; import android.view.View;
+import android.view.View.OnClickListener; import android.widget.Button;
+import android.widget.EditText; import android.widget.ProgressBar;
+
+public class ResisterUser extends Activity { EditText userName,passwprd;
+Button resister,login; ProgressBar progressBar;
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_resister_user); userName=(EditText)    findViewById(R.id.editText1);; passwprd=(EditText) findViewById(R.id.editText2); resister=(Button) findViewById(R.id.button1);
+
+progressBar=(ProgressBar) findViewById(R.id.progressBar1); progressBar.setVisibility(View.GONE);
+
+resister.setOnClickListener(new OnClickListener() {
+
+@Override
+public void onClick(View v) { progressBar.setVisibility(View.VISIBLE);
+
+
+
+}
+});
+String s1=userName.getText().toString(); String s2=passwprd.getText().toString(); new ExecuteTask().execute(s1,s2);
+
+
+
+
+}
+
+class ExecuteTask extends AsyncTask<String, Integer, String>
+{
+
+@Override
+protected String doInBackground(String... params) {
+
+PostData(params); return null;
+}
+
+@Override
+protected void onPostExecute(String result) {
+progressBar.setVisibility(View.GONE);
+}
+
+}
+
+
+
+public void PostData(String[] valuse) { try
+{
+HttpClient httpClient=new DefaultHttpClient(); HttpPost httpPost=new HttpPost(
+"http://10.0.0.8:7777/HttpPostServlet/servlet/httpPostServlet"); List<NameValuePair> list=new ArrayList<NameValuePair>();
+list.add(new BasicNameValuePair("name", valuse[0])); list.add(new BasicNameValuePair("pass",valuse[1])); httpPost.setEntity(new UrlEncodedFormEntity(list)); httpClient.execute(httpPost);
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+
+}
+
+}
+
+
+AndroidManifest.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest      xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.newrestapi"
+android:versionCode="1" android:versionName="1.0" >
+
+<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
+
+<uses-permission android:name="android.permission.INTERNET" />
+
+<application android:allowBackup="true"
+android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
+<activity
+android:name="com.example.newrestapi.MainActivity" android:label="@string/app_name" >
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+<activity android:name="com.example.newrestapi.ResisterUser" android:label="@string/title_activity_resister_user"    >
+</activity>
+</application>
+
+</manifest>
+OUTPUT:
+
+
+                                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus a web service in android was successfully developed.
+
+Ex: 6
+
+Android application for obtaining user location using GPS
+Date:
+
+
+AIM:
+
+To create Android application for obtaining user location using GPS
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent"
+android:layout_margin="16dp" android:gravity="center_horizontal" android:orientation="vertical">
+<TextView android:id="@+id/location"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Current GPS Loaction" android:textSize="24sp" android:textStyle="bold" />
+<Button android:id="@+id/getLocation" android:text="Get location"
+android:layout_width="wrap_content" android:layout_height="wrap_content" />
+</LinearLayout> MainActivity.java:
+import android.content.pm.PackageManager; import android.location.Location;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat; import android.support.v7.app.AppCompatActivity; import android.view.View;
+import android.widget.Button; import android.widget.TextView;
+import com.google.android.gms.location.FusedLocationProviderClient; import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import static android.Manifest.permission.ACCESS_FINE_LOCATION; public class MainActivity extends AppCompatActivity {
+private FusedLocationProviderClient client;
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main); requestPermission();
+client = LocationServices.getFusedLocationProviderClient(this); Button button = findViewById(R.id.getLocation); button.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+if	(ActivityCompat.checkSelfPermission(MainActivity.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ) {
+return;
+}
+client.getLastLocation().addOnSuccessListener(MainActivity.this,	new OnSuccessListener() {
+@Override
+public void onSuccess(Location location) { if (location != null) {
+TextView textView = findViewById(R.id.location); textView.setText(location.toString());
+
+
+
+}
+});
+}
+}
+}
+});
+private void requestPermission(){
+
+1);
+}
+}
+ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION
+
+OUTPUT :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus the program to obtaining user location using GPS was executed successfully.
+
+
+
+
+Ex: 7
+
+Android application for database connectivity with MySQL
+Date:
+
+
+AIM:
+
+To create android application for database connectivity with MySQL
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+MySQL Database Script : create schema myDB
+use myDB
+
+create table tblCountries (
+ID int NOT NULL AUTO_INCREMENT primary key, Country varchar(255) NOT NULL
+)
+
+Insert into tblCountries (Country) values ('India') Insert into tblCountries (Country) values ('Australia') Insert into tblCountries (Country) values ('Mauritius') Insert into tblCountries (Country) values ('USA') Insert into tblCountries (Country) values ('England')
+Insert into tblCountries (Country) values ('New Zealand') Insert into tblCountries (Country) values ('Spain')
+Select * from tblCountries
+select distinct Country from tblCountries
+
+
+activity_main.xml:
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent" android:layout_height="match_parent"
+android:fitsSystemWindows="true" android:orientation="vertical" android:padding="5dp">
+
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="5dp" android:padding="5dp" android:text="Android MySQL Application" android:textColor="@color/colorAccent" android:textSize="20sp" android:textStyle="bold" />
+
+<TextView  android:id="@+id/txtData" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="2dp"
+android:text="Your Data will be Displayed here" android:textStyle="bold" />
+
+<Button android:id="@+id/btnFetch"
+android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_margin="2dp" android:background="@color/colorPrimaryDark" android:minWidth="250dp"
+android:text="Fetch Data" android:textColor="#fff" />
+
+<Button android:id="@+id/btnClear"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:layout_margin="2dp" android:background="@color/colorAccent" android:minWidth="250dp" android:text="Clear" android:textColor="#fff" />
+
+</LinearLayout>
+
+
+MainActivity.java:
+
+package parallelcodes.mysqlapp;
+
+import android.os.AsyncTask; import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity; import android.view.View;
+import android.widget.Button; import android.widget.TextView; import android.widget.Toast;
+
+import java.sql.Connection; import java.sql.DriverManager; import java.sql.ResultSet;
+import java.sql.ResultSetMetaData; import java.sql.Statement;
+
+public class MainActivity extends AppCompatActivity {
+
+private static final String url = "jdbc:mysql://192.168.0.192:3306/myDB"; private static final String user = "hitesh";
+private static final String pass = "1234"; Button btnFetch,btnClear;
+TextView txtData;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+txtData = (TextView) this.findViewById(R.id.txtData); btnFetch = (Button) findViewById(R.id.btnFetch); btnClear = (Button) findViewById(R.id.btnClear);
+btnFetch.setOnClickListener(new View.OnClickListener() {
+
+@Override
+public void onClick(View v) {
+// TODO Auto-generated method stub
+ConnectMySql connectMySql = new ConnectMySql(); connectMySql.execute("");
+}
+});
+btnClear.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View view) { txtData.setText("");
+}
+});
+
+}
+
+private class ConnectMySql extends AsyncTask<String, Void, String> { String res = "";
+
+@Override
+protected void onPreExecute() { super.onPreExecute();
+Toast.makeText(MainActivity.this, "Please wait...", Toast.LENGTH_SHORT)
+.show();
+
+}
+
+@Override
+protected String doInBackground(String... params) { try {
+Class.forName("com.mysql.jdbc.Driver");
+Connection con = DriverManager.getConnection(url, user, pass); System.out.println("Databaseection success");
+
+String result = "Database Connection Successful\n"; Statement st = con.createStatement();
+ResultSet rs = st.executeQuery("select distinct Country from tblCountries"); ResultSetMetaData rsmd = rs.getMetaData();
+
+while (rs.next()) {
+result += rs.getString(1).toString() + "\n";
+}
+res = result;
+} catch (Exception e) { e.printStackTrace(); res = e.toString();
+}
+return res;
+}
+
+@Override
+protected void onPostExecute(String result) {
+txtData.setText(result);
+}
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus the application was created successfully.
+
+Ex: 8
+
+Implement an application that writes data to the SD card.
+Date:
+
+
+
+AIM:
+
+To develop a Android Application that writes data to the SD Card.
+
+PROCEDURE:
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+Activity_main.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_margin="20dp"  android:orientation="vertical"
+<EditText  android:id="@+id/editText" android:layout_width="match_parent"
+android:layout_height="wrap_content" android:singleLine="true" android:textSize="30dp" />
+<Button android:id="@+id/button"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Write Data" android:textSize="30dp" />
+<Button android:id="@+id/button2"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Read data" android:textSize="30dp" />
+<Button android:id="@+id/button3"
+android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="10dp" android:text="Clear" android:textSize="30dp" />
+</LinearLayout>
+
+AndroidManifest.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.example.exno9" >
+<uses-permission     android:name="android.permission.INTERNET "></uses-permission>
+<application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:supportsRtl="true" android:theme="@style/AppTheme" >
+<activity android:name=".MainActivity" >
+<intent-filter>
+<action android:name="android.intent.action.MAIN" />
+<category android:name="android.intent.category.LAUNCHER" />
+</intent-filter>
+</activity>
+</application>
+</manifest>
+
+MainActivity.java:
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity; import android.view.View;
+import android.widget.Button; import android.widget.EditText; import android.widget.Toast; import java.io.BufferedReader; import java.io.File;
+import java.io.FileInputStream; import java.io.FileOutputStream; import java.io.InputStreamReader;
+public class MainActivity extends AppCompatActivity
+{
+EditText e1;
+Button write,read,clear;
+@Override
+protected void onCreate(Bundle savedInstanceState){ super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+e1= (EditText) findViewById(R.id.editText); write= (Button) findViewById(R.id.button); read= (Button) findViewById(R.id.button2); clear= (Button) findViewById(R.id.button3);
+write.setOnClickListener(new View.OnClickListener()
+{@Override
+public void onClick(View v)
+{
+String message=e1.getText().toString(); try{
+File f=new File("/sdcard/myfile.txt"); f.createNewFile();
+FileOutputStream fout=new FileOutputStream(f); fout.write(message.getBytes());
+fout.close(); Toast.makeText(getBaseContext(),"Data Written in SDCARD",Toast.LENGTH_LONG).show();
+}
+catch (Exception e)
+{
+Toast.makeText(getBaseContext(),e.getMessage(),Toast. LENGTH_LONG).show();
+}
+}
+});
+read.setOnClickListener(new View.OnClickListener()
+{
+@Override
+public void onClick(View v)
+{
+String message; String buf = ""; try
+{
+File f = new File("/sdcard/myfile.txt"); FileInputStream fin = new FileInputStream(f); BufferedReader br = new BufferedReader(new InputStreamReader(fin));
+while ((message = br.readLine()) != null)
+{
+buf += message;
+}
+e1.setText(buf); br.close();
+fin.close();
+Toast.makeText(getBaseContext(),"Data Recived from SDCARD",Toast.LENGTH_LONG).show();
+}
+catch (Exception e)
+{
+Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+}
+} });
+clear.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v{ e1.setText(""); }
+});
+}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus Android Application that writes data to the SD Card was developed and executed successfully.
+
+Ex: 9
+
+Android application to generate OTP for user verification
+Date:
+
+
+AIM:
+
+To create an android application to generate OTP for user verification
+
+PROCEDURE:
+
+
+STEP1: SET UP A NEW ANDROID PROJECT
+    • Start Android Studio and Click on “new project”.
+    • Give your application a name, mine is “OTP Authentication”.
+    • click next and choose Target android device.
+    • next, choose an empty activity to keep things simple.
+    • next, name your Activity and click finish to build the project.
+
+STEP2: Add Firebase to your app
+    • Goto Firebase Console
+    • Login with your Gmail ID
+    • On the welcome screen of Firebase click on Add project.
+
+
+Add project window will open, there enter your project name and select your country, Project id will be automatically created and then click on CREATE PROJECT button.
+
+
+
+After this, your app’s dashboard will open. click on Add Firebase to your Android app
+
+
+Now you have to register your app by providing the app package name and SHA-1 signing certificate on below screen.
+
+
+To find the App package name open AndroidManifest.xml and on the top, there is the package name
+
+
+
+To get the SHA-1 signing certificate, click on Gradle tab on the right end of Android studio to open Gradle properties> then click on :app> android> double click on signingReport. In the Monitor pane, you will see SHA1.
+
+
+
+    • Copy and paste the package name and the SHA1 signing certificate in the firebase console register page. Then, click on REGISTER APP button.
+    • Now you have to download the google-services.json file from the download config page and paste it in app module.
+
+
+After than in project pane, click on Gradle Scripts> open project level build.gradle file and add google service dependency in buildscript.
+
+
+
+open app level build.gradle add firebase dependency along with firebase authentication dependency.
+
+
+
+
+
+
+
+
+    1 implementation 'com.google.firebase:firebase-core:11.8.0'
+    2 implementation 'com.google.firebase:firebase-auth:11.8.0'
+3
+4 note, for android studio below 3.0.1 use compile instead of implementation.
+and add the plugin for google service at the bottom of the file.
+
+
+1 apply plugin: 'com.google.gms.google-services'
+
+
+
+    • Click on Sync Now and let the Gradle build.
+    • Now go back to Firebase console and click on Project Overview. In Discover Firebase section there is a card named Authentication, click on GET STARTED on Authentication card.
+
+
+
+On the next page click on SETUP SIGN-IN METHOD and enable phone authentication, then SAVE it. At this point, we are done with the initial setup.
+
+
+
+step3: EDIT androidmanifest.XML
+Our application needs internet for sending OTP. So, for this reason, we have to, first of all, give permission to our app to use the internet. Add the following line to
+your AndroidManifest.xml inside manifest tag.
+
+
+
+
+
+
+
+
+    1 <?xml version="1.0" encoding="utf-8"?>
+    2 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    3 package="com.androindian.fcmotp"> 4
+5	<uses-permission       android:name="android.permission.INTERNET"></uses-permission> 6
+    7 <application
+    8 android:allowBackup="true"
+    9 android:icon="@mipmap/ic_launcher"
+    10 android:label="@string/app_name"
+    11 android:usesCleartextTraffic="true"
+    12 android:roundIcon="@mipmap/ic_launcher_round"
+    13 android:supportsRtl="true"
+    14 android:theme="@style/AppTheme">
+    15 <activity android:name=".ProfileActivity"></activity>
+    16 <activity android:name=".VerifyPhoneActivity" />
+    17 <activity android:name=".MainActivity">
+    18 <intent-filter>
+    19 <action android:name="android.intent.action.MAIN" /> 20
+    21 <category android:name="android.intent.category.LAUNCHER" />
+    22 </intent-filter>
+    23 </activity>
+    24 </application> 25
+26 </manifest>
+activity_main.xml
+
+
+
+
+
+
+
+
+    1 <?xml version="1.0" encoding="utf-8"?>
+    2 <layout
+    3 xmlns:android="http://schemas.android.com/apk/res/android"
+    4 xmlns:app="http://schemas.android.com/apk/res-auto"
+    5 xmlns:tools="http://schemas.android.com/tools"
+    6 tools:context=".MainActivity">
+    7 <LinearLayout
+    8 android:layout_width="match_parent"
+    9 android:layout_height="match_parent" 10
+11	android:orientation="vertical"> 12
+13
+14
+15
+    16 <EditText
+    17 android:id="@+id/mobile"
+    18 android:layout_width="match_parent"
+    19 android:layout_height="wrap_content"
+    20 android:ems="10"
+    21 android:inputType="phone"
+    22 android:hint="Mobile"/> 23
+24
+    25 <Button
+    26 android:id="@+id/button"
+    27 android:layout_width="match_parent"
+    28 android:layout_height="wrap_content"
+    29 android:text="Button" /> 30
+31
+32
+33
+    34 </LinearLayout>
+    35 </layout>
+MainActivity.Java
+
+
+1  package com.androindian.fcmotp; 2
+    3 import androidx.appcompat.app.AppCompatActivity;
+    4 import androidx.databinding.DataBindingUtil; 5
+    6 import android.content.Intent;
+    7 import android.os.Bundle;
+    8 import android.view.View; 9
+10 import com.androindian.fcmotp.databinding.ActivityMainBinding;
+11
+12 public class MainActivity extends AppCompatActivity { 13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43 }
+
+ActivityMainBinding binding;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState);
+binding= DataBindingUtil.setContentView( MainActivity.this,R.layout.activity_main);
+
+
+binding.button.setOnClickListener(new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+String mobile = binding.mobile.getText().toString().trim(); if(mobile.isEmpty() || mobile.length() < 10){
+binding.mobile.setError("Enter a valid mobile");
+binding.mobile.requestFocus(); return;
+}
+
+Intent intent = new Intent(MainActivity.this, VerifyPhoneActivity.class); intent.putExtra("mobile", mobile);
+startActivity(intent);
+}
+});
+}
+VerifyPhoneActivity.Java
+
+
+
+
+
+
+
+
+1   package com.androindian.fcmotp; 2
+    3 import androidx.annotation.NonNull;
+    4 import androidx.appcompat.app.AppCompatActivity; 5
+    6 import android.content.Intent;
+    7 import android.os.Bundle;
+    8 import android.view.View;
+    9 import android.widget.EditText;
+    10 import android.widget.Toast; 11
+    12 import com.google.android.gms.tasks.OnCompleteListener;
+    13 import com.google.android.gms.tasks.Task;
+    14 import com.google.android.gms.tasks.TaskExecutors;
+    15 import com.google.android.material.snackbar.Snackbar;
+    16 import com.google.firebase.FirebaseException;
+    17 import com.google.firebase.auth.AuthResult;
+    18 import com.google.firebase.auth.FirebaseAuth;
+    19 import      com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+    20 import com.google.firebase.auth.PhoneAuthCredential;
+    21 import com.google.firebase.auth.PhoneAuthProvider; 22
+23  import java.util.concurrent.TimeUnit; 24
+25  public class VerifyPhoneActivity extends AppCompatActivity { 26
+    27 private String mVerificationId;
+    28 private EditText editTextCode;
+    29 private FirebaseAuth mAuth; 30
+    31 @Override
+    32 protected void onCreate(Bundle savedInstanceState) {
+    33 super.onCreate(savedInstanceState);
+    34 setContentView(R.layout.activity_verify_phone); 35
+    36 //initializing objects
+    37 mAuth = FirebaseAuth.getInstance();
+    38 editTextCode = findViewById(R.id.editTextCode); 39
+40
+    41 //getting mobile number from the previous activity
+    42 //and sending the verification code to the number
+    43 Intent intent = getIntent();
+    44 String mobile = intent.getStringExtra("mobile");
+    45 sendVerificationCode(mobile); 46
+47
+    48 //if the automatic sms detection did not work, user can also enter the code manually
+    49 //so adding a click listener to the button
+    50 findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {
+    51 @Override
+    52 public void onClick(View v) {
+    53 String code = editTextCode.getText().toString().trim();
+    54 if (code.isEmpty() || code.length() < 6) {
+    55 editTextCode.setError("Enter valid code");
+    56 editTextCode.requestFocus();
+    57 return;
+58	}
+59
+    60 //verifying the code entered manually
+    61 verifyVerificationCode(code);
+62	}
+63	});
+64
+65	}
+66
+    67 //the method is sending verification code
+    68 //the country id is concatenated
+    69 //you can take the country id as user input as well
+    70 private void sendVerificationCode(String mobile) {
+    71 PhoneAuthProvider.getInstance().verifyPhoneNumber( 72		"+91" + mobile,
+73	60,
+    74 TimeUnit.SECONDS,
+    75 TaskExecutors.MAIN_THREAD,
+    76 mCallbacks); 77	}
+78
+79
+    80 //the callback to detect the verification status
+    81 private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new
+    82 PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    83 @Override
+    84 public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) { 85
+    86 //Getting the code sent by SMS
+    87 String code = phoneAuthCredential.getSmsCode(); 88
+    89 //sometime the code is not detected automatically
+    90 //in this case the code will be null
+    91 //so user has to manually enter the code
+    92 if (code != null) {
+93
+94
+95
+96
+97	}
+98
+editTextCode.setText(code);
+//verifying the code verifyVerificationCode(code);
+}
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+}
+@Override
+public void onVerificationFailed(FirebaseException e) { Toast.makeText(VerifyPhoneActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+}
+
+@Override
+public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) { super.onCodeSent(s, forceResendingToken);
+
+//storing the verification id that is sent to the user mVerificationId = s;
+}
+};
+
+
+private void verifyVerificationCode(String code) {
+//creating the credential
+PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+
+//signing the user signInWithPhoneAuthCredential(credential);
+}
+
+private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) { mAuth.signInWithCredential(credential)
+.addOnCompleteListener(VerifyPhoneActivity.this, new OnCompleteListener<AuthResult>() {
+@Override
+public void onComplete(@NonNull Task<AuthResult> task) { if (task.isSuccessful()) {
+//verification successful we will start the profile activity
+Intent intent = new Intent(VerifyPhoneActivity.this, ProfileActivity.class); intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); startActivity(intent);
+
+} else {
+
+//verification unsuccessful.. display an error message
+
+String message = "Somthing is wrong, we will fix it soon...";
+
+if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) { message = "Invalid code entered...";
+}
+
+Snackbar snackbar = Snackbar.make(findViewById(R.id.parent), message, Snackbar.LENGTH_LONG); snackbar.setAction("Dismiss", new View.OnClickListener() {
+@Override
+public void onClick(View v) {
+
+}
+});
+snackbar.show();
+}
+}
+});
+}
+activity_verify_phone.xml
+
+
+
+
+
+
+
+
+    1 <?xml version="1.0" encoding="utf-8"?>
+    2 <RelativeLayout      xmlns:android="http://schemas.android.com/apk/res/android"
+    3 xmlns:app="http://schemas.android.com/apk/res-auto"
+    4 xmlns:tools="http://schemas.android.com/tools"
+    5 android:layout_width="match_parent"
+    6 android:layout_height="match_parent"
+    7 tools:context=".VerifyPhoneActivity"> 8
+    9 <RelativeLayout
+    10 android:id="@+id/relativeLayout"
+    11 android:layout_width="match_parent"
+    12 android:layout_height="200dp"
+    13 android:background="@color/colorPrimary"
+    14 android:orientation="horizontal"> 15
+    16 <ImageView
+    17 android:layout_width="120dp"
+    18 android:layout_height="120dp"
+    19 android:layout_centerHorizontal="true"
+    20 android:layout_centerVertical="true"
+    21 android:background="@mipmap/ic_launcher" /> 22
+23	</RelativeLayout> 24
+    25 <ImageView
+    26 android:id="@+id/imageView"
+    27 android:layout_width="match_parent"
+    28 android:layout_height="120dp"
+    29 android:layout_below="@id/relativeLayout"
+    30 android:layout_marginTop="-50dp"
+    31 android:background="@mipmap/ic_launcher" /> 32
+    33 <RelativeLayout
+    34 android:id="@+id/container"
+    35 android:layout_width="match_parent"
+    36 android:layout_height="match_parent"
+    37 android:layout_below="@id/imageView"
+    38 android:orientation="vertical"
+    39 android:padding="20dp"> 40
+    41 <TextView
+    42 android:id="@+id/textView"
+    43 android:layout_width="wrap_content"
+    44 android:layout_height="wrap_content"
+    45 android:layout_centerHorizontal="true"
+    46 android:layout_marginTop="25dp"
+    47 android:text="Wait for the code I sent You"
+    48 android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+    49 android:textColor="@color/colorPrimary" /> 50
+    51 <ProgressBar
+    52 android:id="@+id/progressbar"
+    53 android:layout_below="@id/textView"
+    54 android:layout_centerHorizontal="true"
+    55 android:layout_width="wrap_content"
+    56 android:layout_height="wrap_content" /> 57
+    58 <EditText
+    59 android:id="@+id/editTextCode"
+    60 android:layout_width="200dp"
+    61 android:layout_height="wrap_content"
+    62 android:layout_below="@id/progressbar"
+    63 android:layout_centerHorizontal="true"
+    64 android:layout_marginTop="10dp" 65	android:digits="0123456789"
+    66 android:drawablePadding="10dp"
+    67 android:hint="enter verification code"
+    68 android:inputType="phone"
+    69 android:maxLength="10" /> 70
+    71 <Button
+    72 android:id="@+id/buttonSignIn"
+    73 android:layout_width="wrap_content"
+    74 android:layout_height="wrap_content"
+    75 android:layout_below="@id/editTextCode"
+    76 android:layout_centerHorizontal="true"
+    77 android:layout_marginTop="15dp"
+    78 android:background="@color/colorPrimaryDark"
+    79 android:text="Sign In"
+    80 android:textAllCaps="false"
+    81 android:textColor="#cdd8f1" /> 82
+83	</RelativeLayout> 84
+85 </RelativeLayout>
+ProfileActivity.java
+
+
+
+
+
+
+
+
+1  package com.androindian.fcmotp; 2
+3  import androidx.appcompat.app.AppCompatActivity; 4
+5  import android.os.Bundle; 6
+7  public class ProfileActivity extends AppCompatActivity { 8
+    9 @Override
+    10 protected void onCreate(Bundle savedInstanceState) {
+    11 super.onCreate(savedInstanceState);
+    12 setContentView(R.layout.activity_profile); 13	}
+14 }
+activity_profile.xml
+
+
+    1 <?xml version="1.0" encoding="utf-8"?>
+    2 <androidx.constraintlayout.widget.ConstraintLayout         xmlns:android="http://schemas.android.com/apk/res/android"
+    3 xmlns:app="http://schemas.android.com/apk/res-auto"
+    4 xmlns:tools="http://schemas.android.com/tools"
+    5 android:layout_width="match_parent"
+    6 android:layout_height="match_parent"
+    7 tools:context=".ProfileActivity"> 8
+9 </androidx.constraintlayout.widget.ConstraintLayout>
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+Thus the application was created and executed successfully.
+
+Ex: 10
+Implement Biometric authentication in Android
+Date:
+
+
+AIM:
+
+To Implement Biometric authentication in Android.
+
+
+PROCEDURE:
+
+
+
+1
+Use Android studio to create an Android application
+2
+Modify src/MainActivity.java file and add required code.
+3
+Modify layout XML file res/layout/activity_main.xml add any GUI component if required.
+4
+Modify res/values/strings.xml to define required constant values
+5
+Modify AndroidManifest.xml as shown below
+6
+Run the application to launch Android emulator and verify the result of the changes done in the application.
+
+
+Mainactvity.java
+
+
+private TextView textView; private ImageView imageView;
+private FingerprintManager fingerprintManager; private FingerprintManager.AuthenticationCallback authenticationCallback;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); setContentView(R.layout.activity_main);
+
+textView = findViewById(R.id.textView);  imageView = findViewById(R.id.imageView); imageView.setImageResource(R.drawable.image1); fingerprintManager = (FingerprintManager) getSystemService(FINGERPRINT_SERVICE);
+
+authenticationCallback = new FingerprintManager.AuthenticationCallback() {
+@Override
+public void onAuthenticationError(int errorCode, CharSequence errString)
+{
+textView.setText(“ERROR”); imageView.setImageResource(R.drawable.image2); super.onAuthenticationError(errorCode, errString);
+}
+
+@Override
+public void onAuthenticationHelp(int helpCode, CharSequence helpString) {
+textView.setText(“HELP”); imageView.setImageResource(R.drawable.image1); super.onAuthenticationHelp(helpCode, helpString);
+}
+
+
+
+
+Gradle File:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+Thus the application was successfully created.
+
+
+
+Ex: 11
+
+Develop an iOS application that uses GUI components
+Date:
+
+
+
+AIM:
+To develop an iOS application that uses GUI components.
+
+
+PROCEDURE:
+
+    1. Open Xcode.
+    2. Go to File>New>Project.
+    3. Click on Single View Application and click next.
+    4. Name it Hello World!
+    5. Decide whether you want it to be an iPhone app, an iPad app, or universal
+    6. Make sure use storyboards and Use Automatic Reference Counting are checked
+    7. Click Next
+    8. Navigate to where you want to save the file and click create
+
+
+
+
+import UIKit
+
+class ViewController: UIViewController {
+@IBOutlet weak var uiTextFieldResult: UITextField! var varNumber1 = 0
+var varNumber2 = 0
+var varNumberResult = 0 var varOperator = "+"
+
+override func viewDidLoad() { super.viewDidLoad()
+// Do any additional setup after loading the view, typically from a nib.
+}
+
+override func didReceiveMemoryWarning() { super.didReceiveMemoryWarning()
+// Dispose of any resources that can be recreated.
+}
+
+@IBAction func button1(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "1"
+
+}
+@IBAction func button2(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "2"
+}
+@IBAction func button3(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "3"
+}
+@IBAction func button4(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "4"
+}
+@IBAction func button5(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "5"
+}
+@IBAction func button6(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "6"
+}
+@IBAction func button7(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "7"
+}
+@IBAction func button8(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "8"
+
+@IBAction func button9(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "9"
+}
+@IBAction func button0(Sender: UIButton){ uiTextFieldResult.text = uiTextFieldResult.text! + "0"
+}
+@IBAction func buttonPlus(Sender: UIButton){ varOperator = "+"
+varNumber1 = Int(uiTextFieldResult.text!)! clearText()
+}
+@IBAction func buttonMinus(Sender: UIButton){ varOperator = "-"
+varNumber1 = Int(uiTextFieldResult.text!)! clearText()
+
+}
+@IBAction func buttonMultiplication(Sender: UIButton){ varOperator = "*"
+varNumber1 = Int(uiTextFieldResult.text!)! clearText()
+}
+@IBAction func buttonDivision(Sender: UIButton){ varOperator = "/"
+varNumber1 = Int(uiTextFieldResult.text!)! clearText()
+}
+@IBAction func buttonEqual(Sender: UIButton){ varNumber2 = Int(uiTextFieldResult.text!)!
+
+switch varOperator { case "+":
+varNumberResult = varNumber1+varNumber2 uiTextFieldResult.text = String(varNumberResult)
+case "-":
+varNumberResult = varNumber1-varNumber2 uiTextFieldResult.text = String(varNumberResult)
+case "*":
+varNumberResult = varNumber1*varNumber2 uiTextFieldResult.text = String(varNumberResult)
+case "/":
+varNumberResult = varNumber1/varNumber2 uiTextFieldResult.text = String(varNumberResult)
+default:
+uiTextFieldResult.text = "ERROR"
+
+}
+
+@IBAction func buttonClear(Sender: UIButton){ clearText()
+}
+
+func clearText() { uiTextFieldResult.text = ""
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus the program was successfully executed.
+
+
+
+
+Ex: 12
+
+
+Develop an iOS application to demonstrate the use of imageview
+
+Date:
+
+
+AIM
+
+
+To develop an iOS application to demonstrate the use of imageview
+
+PROCEDURE:
+
+    1. Open Xcode.
+    2. Go to File>New>Project.
+    3. Click on Single View Application and click next.
+    4. Name it Hello World!
+    5. Decide whether you want it to be an iPhone app, an iPad app, or universal
+    6. Make sure use storyboards and Use Automatic Reference Counting are checked
+    7. Click Next
+    8. Navigate to where you want to save the file and click create
+
+
+ViewController.swift
+
+import UIKit
+import PlaygroundSupport
+class MyViewController : UIViewController { override func viewDidLoad() {
+super.viewDidLoad()
+
+let view = UIView() view.backgroundColor = .white
+let catImage = UIImage(named: "cat.jpg") let myImageView:UIImageView = UIImageView()
+myImageView.contentMode = UIView.ContentMode.scaleAspectFit
+myImageView.frame.size.width = 200
+myImageView.frame.size.height = 200 myImageView.center = self.view.center
+
+myImageView.image = catImage view.addSubview(myImageView)
+self.view = view
+}
+}
+
+
+OUTPUT:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RESULT:
+
+Thus the program was successfully executed.
+
+
+
+
+	
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
